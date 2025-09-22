@@ -1,7 +1,0 @@
-import { Request, Response, NextFunction } from 'express';
-interface CustomError extends Error {
-    status?: number;
-}
-export declare const errorHandler: (err: CustomError, req: Request, res: Response, next: NextFunction) => void;
-export {};
-//# sourceMappingURL=error.middleware.d.ts.map

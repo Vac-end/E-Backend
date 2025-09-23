@@ -25,7 +25,7 @@ export const authService = {
     const accessToken = jwt.sign({ id: user.id, role: user.role }, envConfig.JWT_SECRET, { expiresIn: '15m' });
     const refreshToken = jwt.sign({ id: user.id }, envConfig.REFRESH_SECRET, { expiresIn: '7d' });
     await refreshTokenRepository.create({ token: refreshToken, userId: user.id, expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken , role: user.role, id: user.id};
   },
   refresh: async (token: string) => {
     const refreshToken = await refreshTokenRepository.findByToken(token);

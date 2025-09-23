@@ -9,8 +9,8 @@ export const authController = {
       if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
       }
-      const { accessToken, refreshToken } = await authService.login(email, password);
-      res.status(200).json({ accessToken, refreshToken });
+      const { accessToken, refreshToken, role, id} = await authService.login(email, password);
+      res.status(200).json({ accessToken, refreshToken, role, id});
     } catch (error) {
       handleServiceError(error, 'Login');
       res.status(401).json({ message: 'Invalid credentials' });

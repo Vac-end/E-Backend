@@ -9,7 +9,7 @@ export const envConfig = {
   REFRESH_SECRET: process.env.REFRESH_SECRET || 'your-refresh-secret',
   EMAIL_USER: process.env.EMAIL_USER || '',
   EMAIL_PASS: process.env.EMAIL_PASS || '',
-  FRONTEND_URL: process.env.FRONTEND_URL || '',
-  CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:4200',
+  CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:4200',
   NODE_ENV: process.env.NODE_ENV || 'development',
 };

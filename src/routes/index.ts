@@ -13,6 +13,8 @@ import scheduleRoutes from './schedule.routes';
 import attendanceRoutes from './attendance.routes';
 import gradeRoutes from './grade.routes';
 import groupRoutes from './group.routes';
+import courseteacherRoutes from './courseteacher.routes';
+import gradelevelRoutes from './gradelevel.routes';
 
 const router = Router();
 
@@ -30,5 +32,8 @@ router.use('/schedules', scheduleRoutes);
 router.use('/attendances', attendanceRoutes);
 router.use('/grades', gradeRoutes);
 router.use('/groups', groupRoutes);
+router.use('/courseteacher', courseteacherRoutes);
+router.use('/gradelevel', gradelevelRoutes);
+
 
 export default router;

@@ -11,6 +11,7 @@ const courseSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   createdBy: z.number(),
+  gradeLevelId: z.number(),
 });
 
 router.get('/', authMiddleware, courseController.getAll);

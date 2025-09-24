@@ -8,8 +8,7 @@ interface UserAttributes {
   password: string;
   role: 'niño' | 'docente' | 'administrador';
   name?: string;
-  grade?: string;
-  groupId?: number;
+  gradeId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -23,8 +22,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public password!: string;
   public role!: 'niño' | 'docente' | 'administrador';
   public name?: string;
-  public grade?: string;
-  public groupId?: number;
+  public gradeId?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -37,8 +35,7 @@ User.init(
     password: { type: DataTypes.STRING, allowNull: false },
     role: { type: DataTypes.ENUM('niño', 'docente', 'administrador'), allowNull: false },
     name: { type: DataTypes.STRING, allowNull: true },
-    grade: { type: DataTypes.STRING, allowNull: true },
-    groupId: { type: DataTypes.INTEGER, allowNull: true },
+    gradeId: { type: DataTypes.INTEGER, allowNull: true },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   },

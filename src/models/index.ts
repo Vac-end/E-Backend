@@ -13,7 +13,10 @@ import { Schedule } from './schedule.model';
 import { Attendance } from './attendance.model';
 import { Grade } from './grade.model';
 import { Group } from './group.model';
+import { GradeLevel } from './gradelevel.model';
+import { CourseTeacher } from './courseteacher.model';
 
+// Relaciones existentes
 User.hasMany(Course, { foreignKey: 'createdBy', as: 'CreatedCourses' });
 Course.belongsTo(User, { foreignKey: 'createdBy', as: 'Creator' });
 
@@ -58,18 +61,36 @@ Grade.belongsTo(Submission, { foreignKey: 'submissionId', as: 'Submission' });
 User.hasMany(Grade, { foreignKey: 'teacherId', as: 'GradesGiven' });
 Grade.belongsTo(User, { foreignKey: 'teacherId', as: 'Teacher' });
 
-Group.hasMany(User, { foreignKey: 'groupId', as: 'Members' });
-User.belongsTo(Group, { foreignKey: 'groupId', as: 'Group' });
+Group.belongsToMany(User, { through: 'GroupMembers', foreignKey: 'groupId', otherKey: 'userId', as: 'Members' });
+User.belongsToMany(Group, { through: 'GroupMembers', foreignKey: 'userId', otherKey: 'groupId', as: 'Groups' });
 
 Course.belongsToMany(User, { through: 'CourseUsers', foreignKey: 'courseId', otherKey: 'userId', as: 'EnrolledUsers' });
 User.belongsToMany(Course, { through: 'CourseUsers', foreignKey: 'userId', otherKey: 'courseId', as: 'EnrolledCourses' });
 
-export { sequelize, User, Course, Module, Lesson, Evaluation, Progress, Activity, RefreshToken, Assignment, Submission, Schedule, Attendance, Grade, Group };
+CourseTeacher.belongsTo(User, { foreignKey: 'userId', as: 'Teacher' });
+CourseTeacher.belongsTo(Course, { foreignKey: 'courseId', as: 'Course' });
+
+User.belongsTo(GradeLevel, { foreignKey: 'gradeId', as: 'GradeLevel' });
+
+User.belongsToMany(Course, { through: 'CourseTeacher', as: 'TaughtCourses', foreignKey: 'userId' });
+Course.belongsToMany(User, { through: 'CourseTeacher', as: 'Teachers', foreignKey: 'courseId' });
+
+Course.belongsTo(GradeLevel, { foreignKey: 'gradeLevelId', as: 'GradeLevel' });
+GradeLevel.hasMany(Course, { foreignKey: 'gradeLevelId', as: 'Courses' });
+
+Group.belongsTo(Course, { foreignKey: 'courseId', as: 'Course' });
+Group.belongsTo(User, { foreignKey: 'createdBy', as: 'Creator' });
 
 // Declaración de módulo para extender los tipos de Sequelize
 declare module 'sequelize' {
   interface Model {
     addEnrolledUsers(users: User[]): Promise<void>;
     addEnrolledCourses(courses: Course[]): Promise<void>;
+    addMembers(users: User | User[] | number | number[]): Promise<void>;
+    removeMembers(users: User | User[] | number | number[]): Promise<void>;
+    addTaughtCourses(courses: Course | Course[] | number | number[]): Promise<void>;
+    removeTaughtCourses(courses: Course | Course[] | number | number[]): Promise<void>;
   }
 }
+
+export { sequelize, User, Course, Module, Lesson, Evaluation, Progress, Activity, RefreshToken, Assignment, Submission, Schedule, Attendance, Grade, Group, GradeLevel };

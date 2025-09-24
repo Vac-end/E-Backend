@@ -14,7 +14,6 @@ const userSchema = z.object({
   role: z.enum(['niño', 'docente', 'administrador']),
   name: z.string().optional(),
   grade: z.string().optional(),
-  groupId: z.number().optional(),
 });
 
 router.get('/', authMiddleware, roleMiddleware(['administrador']), userController.getAll);

@@ -24,7 +24,8 @@ export const courseController = {
   },
   create: async (req: Request, res: Response) => {
     try {
-      const course = await courseService.create(req.body);
+      const { title, description, createdBy, gradeLevelId } = req.body;
+      const course = await courseService.create({ title, description, createdBy: Number(createdBy), gradeLevelId: Number(gradeLevelId) });
       res.status(201).json(course);
     } catch (error) {
       handleServiceError(error, 'Create Course');
